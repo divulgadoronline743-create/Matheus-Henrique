@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendar Consulta · Matheus Henrique Psicólogo</title>
+  <meta name="description" content="Agende sua consulta com Matheus Henrique, Psicólogo em Itumbiara-GO. Especialista em Ansiedade e Dependência Digital. Atendimento presencial e online." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #1D9E75;
+      --green-light: #E1F5EE;
+      --green-dark: #085041;
+      --green-mid: #0F6E56;
+      --text: #1a1a1a;
+      --muted: #6b7280;
+      --border: rgba(0,0,0,0.1);
+      --surface: #ffffff;
+      --bg: #f7f9f8;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Hero top bar */
+    .hero {
+      background: linear-gradient(160deg, #0d5c42 0%, #1D9E75 60%, #3dbf93 100%);
+      padding: 2.5rem 1.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      top: -80px; right: -80px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      bottom: -60px; left: -40px;
+    }
+    .avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      border: 2px solid rgba(255,255,255,0.35);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+    .hero p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 10px;
+    }
+    .badges {
+      display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+    }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 11px;
+      border-radius: 20px;
+    }
+
+    /* Main content */
+    .main {
+      max-width: 480px;
+      margin: -1.5rem auto 0;
+      padding: 0 1rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    /* Modalidade */
+    .mod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .mod-btn {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.15s;
+    }
+    .mod-btn .icon { font-size: 18px; margin-bottom: 4px; display: block; }
+    .mod-btn .label { font-size: 13px; font-weight: 500; color: var(--text); display: block; }
+    .mod-btn .sub { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+    .mod-btn.active {
+      border-color: var(--green);
+      background: var(--green-light);
+    }
+    .mod-btn.active .label { color: var(--green-dark); }
+
+    /* Dias */
+    .days-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .day-btn {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 2px;
+      text-align: center;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.15s;
+    }
+    .day-btn .day-name { font-size: 11px; color: var(--muted); display: block; font-weight: 500; }
+    .day-btn .day-num { font-size: 16px; font-weight: 500; color: var(--text); display: block; margin-top: 2px; }
+    .day-btn .day-m { font-size: 10px; color: var(--muted); display: block; }
+    .day-btn.active { border-color: var(--green); background: var(--green-light); }
+    .day-btn.active .day-name, .day-btn.active .day-m { color: var(--green-mid); }
+    .day-btn.active .day-num { color: var(--green-dark); }
+
+    /* Horários */
+    .times-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+    .time-btn {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 6px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      background: #fff;
+      transition: all 0.15s;
+    }
+    .time-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+    /* Form inputs */
+    .field { margin-bottom: 10px; }
+    .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; font-weight: 500; }
+    .field input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border 0.15s;
+    }
+    .field input:focus { border-color: var(--green); }
+    .field input::placeholder { color: #aaa; }
+
+    /* Buttons */
+    .btn-main {
+      width: 100%;
+      padding: 13px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-main:hover { background: var(--green-mid); }
+    .btn-main:active { transform: scale(0.98); }
+
+    .divider { text-align: center; font-size: 12px; color: var(--muted); margin: 10px 0; }
+
+    .btn-wa {
+      width: 100%;
+      padding: 11px;
+      background: #fff;
+      color: var(--green);
+      border: 1.5px solid var(--green);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-wa:hover { background: var(--green-light); }
+
+    /* Success */
+    .success-view {
+      display: none;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+    .success-view h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .success-view p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .success-phone { font-size: 18px; font-weight: 500; color: var(--text); margin: 12px 0; }
+
+    /* Info steps */
+    .steps { display: flex; flex-direction: column; gap: 10px; }
+    .step { display: flex; gap: 10px; align-items: flex-start; }
+    .step-circle {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-body { font-size: 13px; color: var(--text); line-height: 1.5; }
+    .step-body small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding-bottom: 1rem;
+    }
+    .footer a { color: var(--green); text-decoration: none; }
+
+    @media (max-width: 400px) {
+      .days-grid { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+      .day-btn .day-num { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="avatar">MH</div>
+  <h1>Matheus Henrique</h1>
+  <p>Psicólogo · Itumbiara - GO</p>
+  <div class="badges">
+    <span class="badge">Ansiedade</span>
+    <span class="badge">Dependência Digital</span>
+    <span class="badge">Presencial &amp; Online</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <div id="form-view">
+
+    <!-- Como funciona -->
+    <div class="card">
+      <div class="card-title">Como funciona</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-circle">1</div>
+          <div class="step-body">Escolha modalidade, dia e horário<small>Presencial em Itumbiara ou online de qualquer lugar</small></div>
+        </div>
+        <div class="step">
+          <div class="step-circle">2</div>
+          <div class="step-body">Preencha seus dados de contato</div>
+        </div>
+        <div class="step">
+          <div class="step-circle">3</div>
+          <div class="step-body">Você será redirecionado ao WhatsApp do Matheus com tudo preenchido<small>Confirmação em até 24h úteis</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modalidade -->
+    <div class="card">
+      <div class="card-title">Modalidade de atendimento</div>
+      <div class="mod-grid">
+        <div class="mod-btn active" id="mod-presencial" onclick="selectMod('presencial')">
+          <span class="icon">🏥</span>
+          <span class="label">Presencial</span>
+          <span class="sub">Itumbiara · GO</span>
+        </div>
+        <div class="mod-btn" id="mod-online" onclick="selectMod('online')">
+          <span class="icon">💻</span>
+          <span class="label">Online</span>
+          <span class="sub">Qualquer lugar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dia e horário -->
+    <div class="card">
+      <div class="card-title">Dia disponível</div>
+      <div class="days-grid" id="days-grid"></div>
+      <div class="card-title" style="margin-top:16px;">Horário</div>
+      <div class="times-grid" id="times-grid"></div>
+    </div>
+
+    <!-- Dados pessoais -->
+    <div class="card">
+      <div class="card-title">Seus dados</div>
+      <div class="field">
+        <label>Nome completo</label>
+        <input type="text" id="inp-nome" placeholder="Seu nome" autocomplete="name" />
+      </div>
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="tel" id="inp-tel" placeholder="(64) 9XXXX-XXXX" autocomplete="tel" />
+      </div>
+      <div class="field">
+        <label>Motivo da consulta <span style="font-size:11px;color:#aaa">(opcional)</span></label>
+        <input type="text" id="inp-motivo" placeholder="ex: ansiedade, uso excessivo de telas..." />
+      </div>
+      <button class="btn-main" onclick="submitForm()">Solicitar agendamento</button>
+      <div class="divider">ou prefere falar direto?</div>
+      <button class="btn-wa" onclick="openWhatsapp()">💬 Chamar no WhatsApp</button>
+    </div>
+
+    <div class="footer">
+      <p>📍 Itumbiara · Goiás &nbsp;|&nbsp; <a href="tel:+5564993205369">(64) 99320-5369</a></p>
+    </div>
+
+  </div>
+
+  <!-- Tela de sucesso -->
+  <div class="success-view" id="success-view">
+    <div class="card">
+      <div class="success-icon">✅</div>
+      <h2>Solicitação enviada!</h2>
+      <p>Matheus entrará em contato pelo WhatsApp em até <strong>24h úteis</strong> para confirmar seu horário.</p>
+      <p class="success-phone">(64) 99320-5369</p>
+      <button class="btn-wa" onclick="openWhatsapp()">💬 Abrir WhatsApp</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const TIMES = ['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00','18:00'];
+  const DAY_NAMES = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const MON_NAMES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  let selDay = null, selTime = null, selMod = 'presencial';
+
+  function buildDays() {
+    const grid = document.getElementById('days-grid');
+    let added = 0;
+    let cursor = new Date();
+    cursor.setDate(cursor.getDate() + 1);
+    while (added < 5) {
+      const dow = cursor.getDay();
+      if (dow >= 1 && dow <= 5) {
+        const el = document.createElement('div');
+        el.className = 'day-btn';
+        const key = cursor.toISOString().slice(0, 10);
+        el.innerHTML = `
+          <span class="day-name">${DAY_NAMES[dow]}</span>
+          <span class="day-num">${cursor.getDate()}</span>
+          <span class="day-m">${MON_NAMES[cursor.getMonth()]}</span>
+        `;
+        el.onclick = () => {
+          document.querySelectorAll('.day-btn').forEach(d => d.classList.remove('active'));
+          el.classList.add('active');
+          selDay = key;
+        };
+        grid.appendChild(el);
+        added++;
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+  }
+
+  function buildTimes() {
+    const grid = document.getElementById('times-grid');
+    TIMES.forEach(t => {
+      const el = document.createElement('div');
+      el.className = 'time-btn';
+      el.textContent = t;
+      el.onclick = () => {
+        document.querySelectorAll('.time-btn').forEach(d => d.classList.remove('active'));
+        el.classList.add('active');
+        selTime = t;
+      };
+      grid.appendChild(el);
+    });
+  }
+
+  function selectMod(mod) {
+    selMod = mod;
+    document.getElementById('mod-presencial').classList.toggle('active', mod === 'presencial');
+    document.getElementById('mod-online').classList.toggle('active', mod === 'online');
+  }
+
+  function openWhatsapp() {
+    const nome = document.getElementById('inp-nome').value.trim();
+    const motivo = document.getElementById('inp-motivo').value.trim();
+    let msg = 'Olá, Matheus! Vi seu perfil e gostaria de agendar uma consulta.';
+    if (nome) msg += ` Me chamo ${nome}.`;
+    if (selDay && selTime) {
+      const parts = selDay.split('-');
+      msg += ` Tenho interesse no dia ${parts[2]}/${parts[1]}/${parts[0]} às ${selTime}.`;
+    }
+    if (selMod) msg += ` Modalidade: ${selMod === 'presencial' ? 'Presencial' : 'Online'}.`;
+    if (motivo) msg += ` Motivo: ${motivo}.`;
+    window.open('https://wa.me/5564993205369?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  function submitForm() {
+    const nome = document.getElementById('inp-nome').value.trim();
+    const tel = document.getElementById('inp-tel').value.trim();
+    if (!nome) { alert('Por favor, informe seu nome.'); return; }
+    if (!tel) { alert('Por favor, informe seu WhatsApp.'); return; }
+    if (!selDay) { alert('Por favor, selecione um dia.'); return; }
+    if (!selTime) { alert('Por favor, selecione um horário.'); return; }
+    openWhatsapp();
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('success-view').style.display = 'block';
+  }
+
+  buildDays();
+  buildTimes();
+</script>
+
+</body>
+</html>
